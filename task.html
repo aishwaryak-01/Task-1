@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Bootstrap Task</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <!-- Pricing page content -->
+    <div class="container">
+        <!-- Pricing tables go here -->
+        <div class="pricing-table">
+
+            <!-- Pricing table 1 -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Free</h4>
+                    <h6>$0 / mo</h6>
+                 <pre>10 users included
+                    2 GB of storage
+                    Email support
+                    Help center access</pre>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Choose Plan</button>
+                </div>
+            </div>
+
+            <!-- Pricing table 2 -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Pro</h4>
+                    <h6>$15 / mo</h6>
+                    <pre>20 users included
+                        10 GB of storage
+                        Priority email support
+                        Help center access</pre>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Choose Plan</button>
+                </div>
+            </div>
+
+            <!-- Pricing table 3 -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Enterprise</h4>
+                    <h6>$29 / mo</h6>
+                    <pre>30 users included
+                        15 GB of storage
+                        Phone and email support
+                        Help center access</pre>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Choose Plan</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider for number of users -->
+        <div class="container mt-4">
+            <label for="userSlider">Number of Users:</label>
+            <input type="range" class="form-control-range" id="userSlider" min="0" max="30" step="10">
+        </div>
+    </div>
+
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Order Form</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">X</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="comments">Order Comments:</label>
+                            <textarea class="form-control" id="comments" rows="3"
+                                placeholder="Enter your order comments"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Order</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Custom script for highlighting pricing plans based on slider value -->
+    <script>
+        $(document).ready(function () {
+            // Add an event listener for the slider
+            $("#userSlider").on("input", function () {
+                // Get the current value of the slider
+                var sliderValue = parseInt($(this).val());
+
+                // Highlight the corresponding pricing plan based on the slider value
+                $(".card").removeClass("highlighted"); // Remove highlight from all plans
+                $(".card:eq(" + Math.floor(sliderValue / 10) + ")").addClass("highlighted"); // Highlight the corresponding plan
+            });
+        });
+    </script>
+</body>
+</html>
