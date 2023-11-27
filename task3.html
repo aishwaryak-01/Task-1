@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder Structure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .folder, .file {
+            margin-left: 20px;
+        }
+
+        .folder {
+            cursor: pointer;
+        }
+
+        .file {
+            color: #007bff;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+<div id="folderStructure"></div>
+
+<script>
+    // JSON tree representing the folder structure
+    var folderStructure = {
+        "Documents": ["Document1.jpg", "Document2.jpg", "Document3.jpg"],
+        "Desktop": ["Screenshot1.jpg", "videopal.mp4"],
+        "Downloads": {
+            "Drivers": ["Printerdriver.dmg", "cameradriver.dmg"],
+            "Applications": ["Webstorm.dmg", "Pycharm.dmg", "FileZila.dmg", "Mattermost.dmg"],
+            "chromedriver.dmg": null
+        }
+    };
+
+    // Function to generate folder structure HTML
+    function generateFolderStructure(node, indent) {
+        var html = '';
+
+        for (var key in node) {
+            if (Array.isArray(node[key])) {
+                // It's a file
+                html += '<div class="file">' + indent + '📄 ' + key + '</div>';
+            } else {
+                // It's a folder
+                html += '<div class="folder" data-node="' + key + '">' + indent + '📁 ' + key + '</div>';
+                html += generateFolderStructure(node[key], indent + '&nbsp;&nbsp;&nbsp;&nbsp;');
+            }
+        }
+
+        return html;
+    }
+
+    // Initial rendering of the folder structure
+    $('#folderStructure').html(generateFolderStructure(folderStructure, ''));
+
+    // Handle folder click events
+    $('.folder').click(function () {
+        var nodeKey = $(this).data('node');
+        var folderContent = folderStructure[nodeKey];
+
+        if ($(this).hasClass('open')) {
+            // Close the folder
+            $(this).removeClass('open');
+            $(this).nextAll('.file, .folder[data-node^="' + nodeKey + '/"]').hide();
+        } else {
+            // Open the folder
+            $(this).addClass('open');
+            $(this).nextAll('.file, .folder[data-node^="' + nodeKey + '/"]').show();
+
+            // If the folder content is not loaded yet, load it
+            if (folderContent && typeof folderContent === 'object') {
+                $(this).after(generateFolderStructure(folderContent, '&nbsp;&nbsp;&nbsp;&nbsp;'));
+            }
+        }
+    });
+
+    // Handle file click events (you can replace this with your own logic)
+    $('.file').click(function () {
+        var fileName = $(this).text().trim().replace('📄', '');
+        alert('File clicked: ' + fileName);
+    });
+</script>
+
+</body>
+</html>
